@@ -1,0 +1,25 @@
+{
+  "name": "slideshow-md",
+  "version": "1.0.0",
+  "description": "Use Markdown to create a slideshow that you can run and share through the web browser.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mosbth/slideshow.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {},
+  "homepage": "https://github.com/mosbth/slideshow#readme",
+  "devDependencies": {
+    "eslint": "^9.24.0",
+    "htmlhint": "^1.1.4",
+    "stylelint": "^16.18.0",
+    "stylelint-config-standard": "^38.0.0"
+  }
+}

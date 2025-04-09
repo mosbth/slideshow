@@ -1,0 +1,16 @@
+{
+    "extends": "stylelint-config-standard",
+    "rules": {
+        "indentation": 2,
+        "color-hex-case": "lower",
+        "max-empty-lines": 2,
+        "block-no-empty": true,
+        "declaration-colon-space-after": "always",
+        "selector-max-id": 0,
+        "string-quotes": "double"
+    },
+    "ignoreFiles": [
+        "node_modules/**",
+        "dist/**"
+    ]
+}
