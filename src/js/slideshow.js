@@ -1,40 +1,54 @@
+import { marked } from "https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js";
+
 // Slideshow-logik
 const slides = Array.from(document.querySelectorAll('slide')).map(slide => slide.textContent.trim())
-const slideContainer = document.getElementById('slide-container')
-const prevButton = document.getElementById('prev-slide')
-const nextButton = document.getElementById('next-slide')
+const slideContainer = document.getElementById('slide')
 let currentSlideIndex = 0
   
 // Rendera en slide
 function renderSlide() {
   const content = slides[currentSlideIndex]
 
-  slideContainer.innerHTML = marked.parse(content)
-  Prism.highlightAll()
+  // Create a custom renderer
+const renderer = new marked.Renderer();
 
-  /*
-    if (content.trim().startsWith("![") && content.includes("](")) {
-      const imgSrc = content.match(/\((.*?)\)/)[1];
-      slideContainer.innerHTML = `<img src="${imgSrc}" alt="Slide Image">`;
-    } else {
-      slideContainer.innerHTML = marked.parse(content);
-      Prism.highlightAll();
-    }
-*/
-  prevButton.disabled = currentSlideIndex === 0
-  nextButton.disabled = currentSlideIndex === slides.length - 1
+// Customize HTML parsing
+renderer.html = (html) => {
+    return "MOPED" + html; // Return raw HTML unaltered
+};
+
+// Configure Marked to use the custom renderer
+marked.setOptions({
+    renderer: renderer,
+    gfm: false,          // Enable GitHub Flavored Markdown
+    breaks: true,       // Enable line breaks
+    mangle: false,      // Disable email address mangling
+    headerIds: false    // Disable IDs on headers
+});
+
+  slideContainer.innerHTML = marked.parse(content)
+  console.log(slideContainer.innerHTML)
+  //Prism.highlightAll()
 }
-  
-// Eventlisteners för knappar
-prevButton.addEventListener('click', () => {
-  if (currentSlideIndex > 0) currentSlideIndex--
-  renderSlide()
-})
-  
-nextButton.addEventListener('click', () => {
-  if (currentSlideIndex < slides.length - 1) currentSlideIndex++
-  renderSlide()
-})
+
+document.addEventListener("keydown", (event) => {
+  switch (event.key) {
+    case "ArrowLeft":
+    case "ArrowUp":
+        console.log("back")
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+        renderSlide()
+        break;
+    case "ArrowRight":
+    case "ArrowDown":
+      console.log("forward")
+      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        renderSlide()
+        break;
+    default:
+        break;
+}
+});
   
 // Touch-navigering
 let startX = 0
